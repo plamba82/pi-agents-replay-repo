@@ -1,0 +1,124 @@
+{
+  "artifact_id": "cap_http:__127.0.0.1:5000_search_3",
+  "version": "1.0.0",
+  "created_at": "2026-09-25T02:12:21.792278",
+  "name": "Look up member 12345 and read their savings balance",
+  "description": "Automated capability: Look up member 12345 and read their savings balance",
+  "entry_point": "http://127.0.0.1:5000/search",
+  "parameters": [
+    {
+      "name": "member_id",
+      "type": "string",
+      "description": "Input parameter: member_id",
+      "required": true,
+      "default": null,
+      "validation_pattern": null
+    }
+  ],
+  "outputs": [
+    {
+      "name": "member_id",
+      "type": "string",
+      "description": "Output field: member_id",
+      "extraction_path": "$.member_id"
+    },
+    {
+      "name": "member_name",
+      "type": "string",
+      "description": "Output field: member_name",
+      "extraction_path": "$.member_name"
+    },
+    {
+      "name": "savings_balance",
+      "type": "string",
+      "description": "Output field: savings_balance",
+      "extraction_path": "$.savings_balance"
+    }
+  ],
+  "steps": [
+    {
+      "step_id": 1,
+      "action": "ActionType.CLICK",
+      "locator": {
+        "strategy": "LocatorStrategy.ACCESSIBILITY",
+        "primary": "textbox:Member ID",
+        "fallbacks": [],
+        "description": "",
+        "accessibility_role": null,
+        "accessibility_name": null,
+        "visual_landmark": null,
+        "visual_offset": null
+      },
+      "value": null,
+      "parameter_ref": null,
+      "output_ref": null,
+      "checkpoint": null,
+      "timeout_ms": 30000,
+      "retry_count": 3,
+      "on_error": "fail",
+      "expected_errors": []
+    },
+    {
+      "step_id": 2,
+      "action": "ActionType.TYPE",
+      "locator": {
+        "strategy": "LocatorStrategy.ACCESSIBILITY",
+        "primary": "textbox:Member ID",
+        "fallbacks": [],
+        "description": "",
+        "accessibility_role": null,
+        "accessibility_name": null,
+        "visual_landmark": null,
+        "visual_offset": null
+      },
+      "value": "12345",
+      "parameter_ref": "member_id",
+      "output_ref": null,
+      "checkpoint": null,
+      "timeout_ms": 30000,
+      "retry_count": 3,
+      "on_error": "fail",
+      "expected_errors": []
+    },
+    {
+      "step_id": 3,
+      "action": "ActionType.CLICK",
+      "locator": {
+        "strategy": "LocatorStrategy.ACCESSIBILITY",
+        "primary": "button:Search Member",
+        "fallbacks": [],
+        "description": "",
+        "accessibility_role": null,
+        "accessibility_name": null,
+        "visual_landmark": null,
+        "visual_offset": null
+      },
+      "value": null,
+      "parameter_ref": null,
+      "output_ref": null,
+      "checkpoint": null,
+      "timeout_ms": 30000,
+      "retry_count": 3,
+      "on_error": "fail",
+      "expected_errors": []
+    }
+  ],
+  "final_checkpoint": {
+    "description": "Goal achieved",
+    "locator": {
+      "strategy": "LocatorStrategy.ACCESSIBILITY",
+      "primary": "text:Savings Balance",
+      "fallbacks": [],
+      "description": "Final state verification",
+      "accessibility_role": null,
+      "accessibility_name": null,
+      "visual_landmark": null,
+      "visual_offset": null
+    },
+    "expected_state": "visible"
+  },
+  "tenant_id": null,
+  "base_artifact_id": null,
+  "tags": [],
+  "estimated_duration_ms": 0
+}

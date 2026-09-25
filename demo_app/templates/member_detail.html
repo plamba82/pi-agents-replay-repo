@@ -1,0 +1,44 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Member Details</title>
+        <style>
+            body { font-family: Arial; margin: 20px; background: #f0f0f0; }
+            table { border-collapse: collapse; width: 100%; background: white; }
+            td { border: 1px solid #ccc; padding: 10px; }
+            .header { background: #003366; color: white; font-weight: bold; }
+            .label { background: #e0e0e0; font-weight: bold; width: 200px; }
+            .value { background: white; }
+            a { color: #003366; }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr class="header">
+                <td colspan="2">MEMBER DETAILS</td>
+            </tr>
+            <tr>
+                <td class="label">Member ID:</td>
+                <td class="value" role="text" aria-label="Member ID">{{ member.id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Name:</td>
+                <td class="value" role="text" aria-label="Member Name">{{ member.name }}</td>
+            </tr>
+            <tr>
+                <td class="label">Savings Balance:</td>
+                <td class="value" role="text" aria-label="Savings Balance">{{ member.savings_balance }}</td>
+            </tr>
+            <tr>
+                <td class="label">Checking Balance:</td>
+                <td class="value" role="text" aria-label="Checking Balance">{{ member.checking_balance }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a href="/search">← Back to Search</a>
+                </td>
+            </tr>
+        </table>
+    </body>
+    </html>

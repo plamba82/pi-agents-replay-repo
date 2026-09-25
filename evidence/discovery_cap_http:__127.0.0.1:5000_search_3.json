@@ -1,0 +1,41 @@
+{
+  "status": "success",
+  "artifact_id": "cap_http:__127.0.0.1:5000_search_3",
+  "execution_id": "discovery_cap_http:__127.0.0.1:5000_search_3",
+  "started_at": "2026-09-25T02:12:21.792328",
+  "completed_at": null,
+  "duration_ms": 0,
+  "outputs": {
+    "member_id": "12345",
+    "member_name": "John Doe",
+    "savings_balance": "$5,432.10"
+  },
+  "business_outcome": null,
+  "steps": [
+    {
+      "step_id": 1,
+      "action": "click",
+      "status": "success",
+      "duration_ms": 0,
+      "error_message": null
+    },
+    {
+      "step_id": 2,
+      "action": "type",
+      "status": "success",
+      "duration_ms": 0,
+      "error_message": null
+    },
+    {
+      "step_id": 3,
+      "action": "click",
+      "status": "success",
+      "duration_ms": 0,
+      "error_message": null
+    }
+  ],
+  "error_type": null,
+  "error_message": null,
+  "failed_step_id": null,
+  "escalation_reason": null
+}

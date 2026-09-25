@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Account</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f0f0f0; }
+        table { border-collapse: collapse; width: 100%; background: white; }
+        td { border: 1px solid #ccc; padding: 10px; }
+        .header { background: #003366; color: white; font-weight: bold; }
+        .label { background: #e0e0e0; font-weight: bold; width: 200px; }
+        .value { background: white; }
+        input, select { padding: 5px; width: 300px; }
+        button { padding: 8px 20px; background: #003366; color: white; border: none; cursor: pointer; margin-right: 10px; }
+        button:hover { background: #004488; }
+        .error { color: red; font-weight: bold; padding: 10px; }
+        .success { color: green; font-weight: bold; padding: 10px; }
+        .required { color: red; }
+        a { color: #003366; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <table>
+        <tr class="header">
+            <td colspan="2">ADD NEW ACCOUNT</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                {% if error %}
+                <div class="error" role="alert" aria-live="polite">{{ error }}</div>
+                {% endif %}
+                {% if success %}
+                <div class="success" role="alert" aria-live="polite">{{ success }}</div>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <form id="addAccountForm" method="post" action="/add-account">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td class="label">
+                                <label for="member_id">Member ID: <span class="required">*</span></label>
+                            </td>
+                            <td class="value">
+                                <input 
+                                    type="text" 
+                                    id="member_id" 
+                                    name="member_id" 
+                                    required 
+                                    aria-required="true"
+                                    aria-label="Member ID"
+                                    role="textbox"
+                                    placeholder="Enter member ID">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <label for="account_type">Account Type: <span class="required">*</span></label>
+                            </td>
+                            <td class="value">
+                                <select 
+                                    id="account_type" 
+                                    name="account_type" 
+                                    required 
+                                    aria-required="true"
+                                    aria-label="Account Type"
+                                    role="combobox">
+                                    <option value="">-- Select Account Type --</option>
+                                    <option value="savings">Savings Account</option>
+                                    <option value="checking">Checking Account</option>
+                                    <option value="money_market">Money Market Account</option>
+                                    <option value="cd">Certificate of Deposit</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <label for="initial_deposit">Initial Deposit: <span class="required">*</span></label>
+                            </td>
+                            <td class="value">
+                                <input 
+                                    type="number" 
+                                    id="initial_deposit" 
+                                    name="initial_deposit" 
+                                    min="0" 
+                                    step="0.01" 
+                                    required 
+                                    aria-required="true"
+                                    aria-label="Initial Deposit Amount"
+                                    role="spinbutton"
+                                    placeholder="0.00">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <label for="account_name">Account Nickname:</label>
+                            </td>
+                            <td class="value">
+                                <input 
+                                    type="text" 
+                                    id="account_name" 
+                                    name="account_name" 
+                                    aria-label="Account Nickname"
+                                    role="textbox"
+                                    placeholder="Optional nickname">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <label for="joint_owner">Joint Owner:</label>
+                            </td>
+                            <td class="value">
+                                <input 
+                                    type="text" 
+                                    id="joint_owner" 
+                                    name="joint_owner" 
+                                    aria-label="Joint Owner Name"
+                                    role="textbox"
+                                    placeholder="Optional joint owner">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center; padding: 15px;">
+                                <button 
+                                    type="submit" 
+                                    role="button" 
+                                    aria-label="Submit Account Application">
+                                    Submit Application
+                                </button>
+                                <button 
+                                    type="reset" 
+                                    role="button" 
+                                    aria-label="Clear Form">
+                                    Clear Form
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <a href="/search">← Back to Member Search</a> | 
+                <a href="/">← Back to Home</a>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        document.getElementById('addAccountForm').addEventListener('submit', function(event) {
+            const memberId = document.getElementById('member_id').value.trim();
+            const accountType = document.getElementById('account_type').value;
+            const initialDeposit = parseFloat(document.getElementById('initial_deposit').value);
+
+            if (!memberId) {
+                alert('Member ID is required');
+                event.preventDefault();
+                return false;
+            }
+
+            if (!accountType) {
+                alert('Please select an account type');
+                event.preventDefault();
+                return false;
+            }
+
+            if (isNaN(initialDeposit) || initialDeposit < 0) {
+                alert('Please enter a valid initial deposit amount');
+                event.preventDefault();
+                return false;
+            }
+
+            if (accountType === 'savings' && initialDeposit < 25) {
+                alert('Savings accounts require a minimum deposit of $25.00');
+                event.preventDefault();
+                return false;
+            }
+
+            if (accountType === 'cd' && initialDeposit < 1000) {
+                alert('Certificate of Deposit requires a minimum deposit of $1,000.00');
+                event.preventDefault();
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

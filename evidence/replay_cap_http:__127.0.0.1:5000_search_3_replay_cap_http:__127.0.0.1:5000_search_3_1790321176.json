@@ -1,0 +1,30 @@
+{
+  "status": "failure",
+  "artifact_id": "cap_http:__127.0.0.1:5000_search_3",
+  "execution_id": "replay_cap_http:__127.0.0.1:5000_search_3_1790321176",
+  "started_at": "2026-09-25T02:26:19.146884",
+  "completed_at": null,
+  "duration_ms": 0,
+  "outputs": {},
+  "business_outcome": null,
+  "steps": [
+    {
+      "step_id": 1,
+      "action": "click",
+      "status": "success",
+      "duration_ms": 188,
+      "error_message": null
+    },
+    {
+      "step_id": 2,
+      "action": "type",
+      "status": "success",
+      "duration_ms": 78,
+      "error_message": null
+    }
+  ],
+  "error_type": "checkpoint_failed",
+  "error_message": "Final checkpoint verification failed",
+  "failed_step_id": null,
+  "escalation_reason": null
+}

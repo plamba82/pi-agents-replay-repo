@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f0f0f0; }
+        table { border-collapse: collapse; width: 100%; background: white; }
+        td, th { border: 1px solid #ccc; padding: 10px; }
+        .header { background: #003366; color: white; font-weight: bold; }
+        .subheader { background: #e0e0e0; font-weight: bold; }
+        .label { background: #e0e0e0; font-weight: bold; width: 150px; }
+        input, select { padding: 5px; width: 200px; }
+        button { padding: 8px 20px; background: #003366; color: white; border: none; cursor: pointer; margin-right: 10px; }
+        button:hover { background: #004488; }
+        .transaction-row { background: white; }
+        .transaction-row:nth-child(even) { background: #f9f9f9; }
+        .debit { color: #cc0000; }
+        .credit { color: #006600; }
+        .error { color: red; font-weight: bold; padding: 10px; }
+        a { color: #003366; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .filter-section { padding: 15px; background: #f5f5f5; }
+    </style>
+</head>
+<body>
+    <table>
+        <tr class="header">
+            <td colspan="6">TRANSACTION HISTORY</td>
+        </tr>
+        <tr>
+            <td colspan="6" class="filter-section">
+                {% if error %}
+                <div class="error" role="alert" aria-live="polite">{{ error }}</div>
+                {% endif %}
+                <form method="get" action="/transactions">
+                    <table style="width: 100%; border: none;">
+                        <tr>
+                            <td class="label" style="border: none;">
+                                <label for="member_id">Member ID:</label>
+                            </td>
+                            <td style="border: none;">
+                                <input 
+                                    type="text" 
+                                    id="member_id" 
+                                    name="member_id" 
+                                    value="{{ member_id or '' }}"
+                                    aria-label="Member ID"
+                                    role="textbox">
+                            </td>
+                            <td class="label" style="border: none;">
+                                <label for="account_type">Account:</label>
+                            </td>
+                            <td style="border: none;">
+                                <select 
+                                    id="account_type" 
+                                    name="account_type"
+                                    aria-label="Account Type"
+                                    role="combobox">
+                                    <option value="">All Accounts</option>
+                                    <option value="savings" {% if account_type == 'savings' %}selected{% endif %}>Savings</option>
+                                    <option value="checking" {% if account_type == 'checking' %}selected{% endif %}>Checking</option>
+                                </select>
+                            </td>
+                            <td style="border: none;">
+                                <button type="submit" role="button" aria-label="Filter Transactions">Filter</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </td>
+        </tr>
+        <tr class="subheader">
+            <th>Date</th>
+            <th>Time</th>
+            <th>Description</th>
+            <th>Account</th>
+            <th>Amount</th>
+            <th>Balance</th>
+        </tr>
+        {% if transactions %}
+            {% for txn in transactions %}
+            <tr class="transaction-row">
+                <td role="cell" aria-label="Transaction Date">{{ txn.date }}</td>
+                <td role="cell" aria-label="Transaction Time">{{ txn.time }}</td>
+                <td role="cell" aria-label="Transaction Description">{{ txn.description }}</td>
+                <td role="cell" aria-label="Account Type">{{ txn.account }}</td>
+                <td role="cell" aria-label="Transaction Amount" class="{% if txn.type == 'debit' %}debit{% else %}credit{% endif %}">
+                    {{ txn.amount }}
+                </td>
+                <td role="cell" aria-label="Account Balance">{{ txn.balance }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 20px;">
+                    {% if member_id %}
+                        No transactions found for the selected criteria.
+                    {% else %}
+                        Enter a Member ID to view transactions.
+                    {% endif %}
+                </td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td colspan="6">
+                <a href="/search">← Back to Member Search</a> | 
+                <a href="/">← Back to Home</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
